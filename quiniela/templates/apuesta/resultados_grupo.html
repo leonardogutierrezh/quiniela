@@ -1,25 +1,33 @@
 {% extends 'admin.html' %}
 {% block titulo %}
+<div class="container">
+	<div class="apuesta-container">
     Grupo {{ grupo.nombre }}
+	</div>
+</div>
 {% endblock %}
 {% block seccion-contenido %}
+<div class="container">
+	<div class="apuesta-container">
+
     <form class="form-signin" id='formulario' method='post' action=''>{% csrf_token %}
-    <table>
+
         {% for partido in partidos %}
-            <tr>
-                <td>{{ partido.0.fecha }} {{ partido.0.hora }}</td>
-            </tr>
-            <tr>
-                <td>{{ partido.0.equipoL.bandera }}</td>
-                <td>{{ partido.0.equipoV.bandera }}</td>
-            </tr>
-            <tr>
-                <td>{{ partido.0.equipoL }}</td>
-                <td>{{ partido.0.equipoV }}</td>
-            </tr>
-            <tr>
-                <td>
-                <div class="form-group {% if partido.1 %}  {% else %} has-error {% endif %}">
+
+<div>
+	<div  class="apuesta-fechas">
+		{{ partido.0.fecha }} {{ partido.0.hora }}
+	</div>
+
+	
+	<div class="apuesta-banderas-l">
+		<img src="{{ STATIC_URL }}{{ partido.0.equipoL.bandera }}" height="30" width="43">
+	</div  class="apuesta-equipos">
+<div class="centrado-apuestas">	
+	<div class="apuesta-equipos-l">
+		{{ partido.0.equipoL }}
+	</div>
+                <div class="form-group {% if partido.1 %}  {% else %} has-error {% endif %} apuesta-resultados">
                     <div class=" ">
                         <input type="text" value="{{ partido.2 }}" class=" form-control" name="resultado-{{ partido.0.id }}-{{ partido.0.equipoL.id }}"/>
                         {% if partido.1 %}
@@ -28,9 +36,7 @@
                         {% endif %}
                     </div>
                 </div>
-                </td>
-                <td>
-                <div class="form-group {% if partido.1 %}  {% else %} has-error {% endif %}">
+  		 <div class="form-group {% if partido.1 %}  {% else %} has-error {% endif %} apuesta-resultados">
                     <div class=" ">
                         <input type="text" value="{{ partido.3 }}" class="form-control" name="resultado-{{ partido.0.id }}-{{ partido.0.equipoV.id }}"/>
                     </div>
@@ -39,10 +45,24 @@
                             <span class="help-block ">Este campo es obligatorio y debe ser un numero.</span>
                         {% endif %}
                 </div>
-                </td>
-            </tr>
+	<div class="apuesta-equipos-v">
+		{{ partido.0.equipoV }}
+	</div>
+	</div>
+	<div class="apuesta-banderas-v">
+		<img src="{{ STATIC_URL }}{{ partido.0.equipoV.bandera }}" height="30" width="43">
+	</div>
+	
+</div>
+
+
+             
+
         {% endfor %}
-    </table>
+    
     <button class="btn btn-lg btn-primary btn-block" type="submit">Guardar</button>
     </form>
+
+</div>
+</div>
 {% endblock %}
