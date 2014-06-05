@@ -1,0 +1,6 @@
+{{ usuario.first_name }} {{ usuario.last_name }}
+<ul>
+    {% for torneo in torneos %}
+        <li><a href="/torneo/{{ torneo.id }}">{{ torneo.nombre }}</a></li>
+    {% endfor %}
+</ul>

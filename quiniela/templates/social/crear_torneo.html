@@ -1,0 +1,14 @@
+    <div class="container">
+
+      <form class="form-signin" id='formulario' method='post' action=''>{% csrf_token %}
+
+        <h2 class="form-signin-heading">Crear Torneo</h2>
+        {{ invitados_forms.management_form }}
+        {% for invitado in invitados_forms %}
+            {{ invitado }}
+        {% endfor %}
+        <button class="btn btn-lg btn-primary btn-block" type="submit">Sign in</button>
+		{{error_log}}
+      </form>
+
+    </div> <!-- /container -->
