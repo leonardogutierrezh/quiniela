@@ -17,4 +17,5 @@ urlpatterns = patterns('',
     url(r'^perfil/$', 'mundial.views.perfil'),
     url(r'^registrarse/$', 'mundial.views.registrarse'),
     url(r'^crear_torneo/$', 'social.views.crear_torneo'),
+    url(r'^enviar_invitaciones/$', 'social.views.enviar_invitaciones'),
 )

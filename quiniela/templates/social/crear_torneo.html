@@ -1,14 +1,90 @@
-    <div class="container">
+{% extends "admin.html" %}
+{% load bootstrap %}
+{% block titulo %}
+    Nuevo Torneo
+{% endblock %}
+{% block seccion-contenido %}
+<form class="form-signin" id='formulario' method='post' action=''>{% csrf_token %}
+<div class="row">
+        <div class="col-md-6">
+            {{ formulario | bootstrap }}
+        </div>
+        <div class="col-md-6">
+            <div class="col-md-6">
+                <h4>Invitados</h4>
+            </div>
+            <div class="col-md-6 text-right">
+                <a id="agregar-sala" class="btn btn-primary">Agregar Invitado</a>
+            </div>
+            <div class="col-md-12">
+                <table id="salas-formset-container" class="table table-stripped">
+                    <th>Email</th>
+                    <tbody id="salas-formset-body">
+                        {{ invitados_forms.management_form }}
+                        {% for invitadoform in invitados_forms %}
+                            <tr>
+                                <td>
+                                    <div class="form-group">
 
-      <form class="form-signin" id='formulario' method='post' action=''>{% csrf_token %}
 
-        <h2 class="form-signin-heading">Crear Torneo</h2>
-        {{ invitados_forms.management_form }}
-        {% for invitado in invitados_forms %}
-            {{ invitado }}
-        {% endfor %}
-        <button class="btn btn-lg btn-primary btn-block" type="submit">Sign in</button>
-		{{error_log}}
-      </form>
+                                        {{ invitadoform.email }}
+                                    </div>
+                                </td>
+                                {% if invitadoform.can_delete %}
+                                    <td>
+                                        <div class="checkbox">
+                                            <label>
+                                                {{ invitadoform.DELETE }}
+                                                Eliminar
+                                            </label>
+                                        </div>
+                                    </td>
+                                {% endif %}
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+            <button class="btn btn-lg btn-primary btn-block" type="submit">Sign in</button>
+        </div>
+</form>
+{% endblock %}
+{% block js %}
+    <script type="text/html" id="sala-template">
+        {% with invitados_forms.empty_form as form %}
+            <tr>
+                <td>
+                    <div class="form-group">
+                        {{ form.email }}
+                    </div>
+                </td>
+                {% if invitados_forms.can_delete %}
+                    <td>
+                        <div class="checkbox">
+                            <label>
+                                {{ form.DELETE }}
+                                Eliminar
+                            </label>
+                        </div>
+                    </td>
+                {% endif %}
+            </tr>
+        {% endwith %}
+    </script>
+    <script type="text/javascript">
+        $( '#agregar-sala' ).on('click', function(event) {
+            event.preventDefault();
+            /* Act on the event */
+            var numForms = parseInt( $( '#id_form-TOTAL_FORMS' ).val() );
+            var tmpl = $( '#sala-template' ).html();
+            var compiledTmpl = tmpl.replace(/__prefix__/g, numForms);
 
-    </div> <!-- /container -->
+            $( '#id_form-TOTAL_FORMS' ).attr('value',numForms+1);
+            $( '#salas-formset-body' ).append(compiledTmpl);
+        });
+
+    </script>
+
+
+{% endblock %}

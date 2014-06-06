@@ -142,6 +142,7 @@ INSTALLED_APPS = (
     'apuesta',
     'mundial',
     'social',
+    'bootstrapform',
 )
 
 # A sample logging configuration. The only tangible logging
@@ -172,3 +173,10 @@ LOGGING = {
         },
     }
 }
+
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_HOST_USER = 'intercambios.usb@gmail.com'
+EMAIL_HOST_PASSWORD = 'sgiDRICUSB'
+EMAIL_PORT = 587
+EMAIL_USE_TLS = True
+
