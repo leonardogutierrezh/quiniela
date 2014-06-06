@@ -1,0 +1,18 @@
+{% extends 'admin.html' %}
+{% block titulo %}
+    Mi quiniela
+{% endblock %}
+{% block seccion-contenido %}
+    <div class="col-sm-6">
+        <table>
+            <th>Participante</th>
+            <th>Puntaje</th>
+            {% for participante in participantes %}
+                <tr>
+                    <td>{{ participante.0.first_name }} {{ participante.0.last_name }}</td>
+                    <td>{{ participante.1 }}</td>
+                </tr>
+            {% endfor %}
+        </table>
+    </div>
+{% endblock %}

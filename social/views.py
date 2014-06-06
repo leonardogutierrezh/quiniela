@@ -7,6 +7,7 @@ from django.contrib.auth.forms import *
 from django.contrib.auth import login, authenticate, logout
 from django.contrib.auth.decorators import login_required
 from social.models import *
+from mundial.models import *
 from social.forms import *
 from django.forms.formsets import formset_factory
 import time
@@ -81,3 +82,7 @@ def invitacion(request,invitacion):
         formulario_email = EmailForm(initial={'email': invitacion.correo})
     return render_to_response('social/registrarse_invitado.html', {'formulario':formulario,
                                                                    'formulario_email':formulario_email}, context_instance=RequestContext(request))
+@login_required(login_url='/')
+def mi_quiniela(request):
+    grupos = Grupo.objects.all()
+    return render_to_response('social/mi_quiniela.html', {'grupos': grupos}, context_instance=RequestContext(request))
