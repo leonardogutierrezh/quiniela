@@ -25,46 +25,48 @@ def is_number(s):
 
 @login_required(login_url='/')
 def resultados_grupo(request, id_grupo):
-    usuario = request.user
-    grupo = Grupo.objects.get(id=id_grupo)
-    locales = Equipo.objects.filter(grupo=grupo)
-    partidos = Partido.objects.filter(equipoL__id__in=locales)
-    lista = []
+    if Configuracion.objects.get(tipo='apuestas').valor:
+        usuario = request.user
+        grupo = Grupo.objects.get(id=id_grupo)
+        locales = Equipo.objects.filter(grupo=grupo)
+        partidos = Partido.objects.filter(equipoL__id__in=locales)
+        lista = []
 
-    if request.method == 'POST':
-        verificador = True
-        for partido in partidos:
-            equipoL = request.POST.get('resultado-' + str(partido.id) + '-' + str(partido.equipoL.id))
-            equipoV = request.POST.get('resultado-' + str(partido.id) + '-' + str(partido.equipoV.id))
-
-            if is_number(equipoL) and is_number(equipoV):
-                tupla = (partido,True,equipoL,equipoV)
-                lista.append(tupla)
-            else:
-                tupla = (partido, False,0,0)
-                lista.append(tupla)
-                verificador = False
-        if verificador:
+        if request.method == 'POST':
+            verificador = True
             for partido in partidos:
                 equipoL = request.POST.get('resultado-' + str(partido.id) + '-' + str(partido.equipoL.id))
                 equipoV = request.POST.get('resultado-' + str(partido.id) + '-' + str(partido.equipoV.id))
+
+                if is_number(equipoL) and is_number(equipoV):
+                    tupla = (partido,True,equipoL,equipoV)
+                    lista.append(tupla)
+                else:
+                    tupla = (partido, False,0,0)
+                    lista.append(tupla)
+                    verificador = False
+            if verificador:
+                for partido in partidos:
+                    equipoL = request.POST.get('resultado-' + str(partido.id) + '-' + str(partido.equipoL.id))
+                    equipoV = request.POST.get('resultado-' + str(partido.id) + '-' + str(partido.equipoV.id))
+                    if Apuesta.objects.filter(usuario=usuario, partido=partido):
+                        apuesta = Apuesta.objects.get(usuario=usuario, partido=partido)
+                        apuesta.golesL = equipoL
+                        apuesta.golesV = equipoV
+                        apuesta.save()
+                    else:
+                        apuesta = Apuesta.objects.create(partido=partido, golesL=equipoL, golesV=equipoV,
+                                                         usuario=usuario, ganador='N')
+                return HttpResponseRedirect('/mi_quiniela')
+        else:
+            for partido in partidos:
                 if Apuesta.objects.filter(usuario=usuario, partido=partido):
                     apuesta = Apuesta.objects.get(usuario=usuario, partido=partido)
-                    apuesta.golesL = equipoL
-                    apuesta.golesV = equipoV
-                    apuesta.save()
+                    tupla = (partido, True,apuesta.golesL,apuesta.golesV)
+                    lista.append(tupla)
                 else:
-                    apuesta = Apuesta.objects.create(partido=partido, golesL=equipoL, golesV=equipoV,
-                                                     usuario=usuario, ganador='N')
-            return HttpResponseRedirect('/mi_quiniela')
-    else:
-        for partido in partidos:
-            if Apuesta.objects.filter(usuario=usuario, partido=partido):
-                apuesta = Apuesta.objects.get(usuario=usuario, partido=partido)
-                tupla = (partido, True,apuesta.golesL,apuesta.golesV)
-                lista.append(tupla)
-            else:
-                tupla = (partido, True,0,0)
-                lista.append(tupla)
+                    tupla = (partido, True,0,0)
+                    lista.append(tupla)
 
-    return render_to_response('apuesta/resultados_grupo.html', {'partidos':lista, 'grupo': grupo}, context_instance=RequestContext(request))
+        return render_to_response('apuesta/resultados_grupo.html', {'partidos':lista, 'grupo': grupo}, context_instance=RequestContext(request))
+    return HttpResponseRedirect('/ver_grupo/' + id_grupo)

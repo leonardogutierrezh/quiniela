@@ -27,3 +27,7 @@ class Partido(models.Model):
     equipoV = models.ForeignKey(Equipo, related_name="Visitante")
     golesL = models.IntegerField()
     golesC = models.IntegerField()
+
+class Configuracion(models.Model):
+    tipo = models.CharField(max_length = 30)
+    valor = models.BooleanField(default=True)
