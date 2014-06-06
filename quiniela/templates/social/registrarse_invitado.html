@@ -1,0 +1,26 @@
+{% extends 'admin.html' %}
+{% block titulo %}
+    Bienvenido!
+{% endblock %}
+{% block seccion-contenido %}
+    <div class="container">
+
+      <form class="form-signin" id='formulario' method='post' action=''>{% csrf_token %}
+
+        <h2 class="form-signin-heading">Registrarse</h2>
+ {% comment %}
+ 	       <input type="text" class="form-control" placeholder="Email address" autofocus>
+         <input type="password" class="form-control" placeholder="Password">
+         <label class="checkbox">
+          <input type="checkbox" value="remember-me"> Remember me
+        </label>
+
+ {% endcomment %}
+ {{formulario }}
+ {{ formulario_email }}
+        <button class="btn btn-lg btn-primary btn-block" type="submit">Sign in</button>
+		{{error_log}}
+      </form>
+
+    </div> <!-- /container -->
+{% endblock %}

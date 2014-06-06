@@ -18,4 +18,5 @@ urlpatterns = patterns('',
     url(r'^registrarse/$', 'mundial.views.registrarse'),
     url(r'^crear_torneo/$', 'social.views.crear_torneo'),
     url(r'^enviar_invitaciones/$', 'social.views.enviar_invitaciones'),
+    url(r'invitacion/(?P<invitacion>[\w|\W]+)/$', 'social.views.invitacion'),
 )

@@ -57,5 +57,5 @@ def registrarse(request):
 def perfil(request):
     usuario = request.user
     torneos = Torneo.objects.filter()
-    return render_to_response('mundial/perfil.html', {'torneos':torneos, 'usuario':usuario})
+    return render_to_response('mundial/perfil.html', {'torneos':torneos, 'usuario':usuario}, context_instance=RequestContext(request))
 

@@ -52,3 +52,32 @@ def enviar_invitaciones(request):
         except:
             pass
     return HttpResponseRedirect("/")
+
+def invitacion(request,invitacion):
+    invitacion = Invitacion.objects.get(hash=invitacion)
+    if request.method == "POST":
+        formulario = UserCreationForm(request.POST)
+        formulario_email = EmailForm(request.POST)
+        if formulario.is_valid() and formulario_email.is_valid():
+            usuario = formulario.save()
+            usuario.email = formulario_email.cleaned_data['email']
+            usuario.first_name = formulario_email.cleaned_data['nombre']
+            usuario.last_name = formulario_email.cleaned_data['apellido']
+            usuario.save()
+            usuario.backend = 'django.contrib.auth.backends.ModelBackend'
+            login(request,usuario)
+            invitacion.torneo.miembros.add(usuario)
+            invitacion.delete()
+            return HttpResponseRedirect('/perfil')
+    else:
+        if User.objects.filter(email=invitacion.correo):
+            usuario = User.objects.get(email=invitacion.correo)
+            usuario.backend = 'django.contrib.auth.backends.ModelBackend'
+            login(request,usuario)
+            invitacion.torneo.miembros.add(usuario)
+            invitacion.delete()
+            return HttpResponseRedirect("/perfil")
+        formulario = UserCreationForm()
+        formulario_email = EmailForm(initial={'email': invitacion.correo})
+    return render_to_response('social/registrarse_invitado.html', {'formulario':formulario,
+                                                                   'formulario_email':formulario_email}, context_instance=RequestContext(request))
