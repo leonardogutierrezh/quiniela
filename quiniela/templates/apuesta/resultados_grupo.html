@@ -1,31 +1,48 @@
 {% extends 'admin.html' %}
 {% block titulo %}
-    Grupo A
+    Grupo {{ grupo.nombre }}
 {% endblock %}
 {% block seccion-contenido %}
-    <form action="">
+    <form class="form-signin" id='formulario' method='post' action=''>{% csrf_token %}
     <table>
         {% for partido in partidos %}
             <tr>
-                <td>{{ partido.fecha }} {{ partido.hora }}</td>
+                <td>{{ partido.0.fecha }} {{ partido.0.hora }}</td>
             </tr>
             <tr>
-                <td>{{ pardito.equipoL.bandera }}</td>
-                <td>{{ partido.equipoV.bandera }}</td>
+                <td>{{ partido.0.equipoL.bandera }}</td>
+                <td>{{ partido.0.equipoV.bandera }}</td>
             </tr>
             <tr>
-                <td>{{ partido.equipoL }}</td>
-                <td>{{ partido.equipoV }}</td>
+                <td>{{ partido.0.equipoL }}</td>
+                <td>{{ partido.0.equipoV }}</td>
             </tr>
             <tr>
-                <td><input type="text" name="resultado-{{ partido.id }}-{{ partido.equipoL.id }}"/></td>
-                <td><input type="text" name="resultado-{{ partido.id }}-{{ partido.equipoV.id }}"/></td>
+                <td>
+                <div class="form-group {% if partido.1 %}  {% else %} has-error {% endif %}">
+                    <div class=" ">
+                        <input type="text" value="{{ partido.2 }}" class=" form-control" name="resultado-{{ partido.0.id }}-{{ partido.0.equipoL.id }}"/>
+                        {% if partido.1 %}
+                        {% else %}
+                            <span class="help-block ">Este campo es obligatorio y debe ser un numero.</span>
+                        {% endif %}
+                    </div>
+                </div>
+                </td>
+                <td>
+                <div class="form-group {% if partido.1 %}  {% else %} has-error {% endif %}">
+                    <div class=" ">
+                        <input type="text" value="{{ partido.3 }}" class="form-control" name="resultado-{{ partido.0.id }}-{{ partido.0.equipoV.id }}"/>
+                    </div>
+                    {% if partido.1 %}
+                        {% else %}
+                            <span class="help-block ">Este campo es obligatorio y debe ser un numero.</span>
+                        {% endif %}
+                </div>
+                </td>
             </tr>
         {% endfor %}
     </table>
-    <button class="btn btn-lg btn-primary btn-block" type="submit">Sign in</button>
+    <button class="btn btn-lg btn-primary btn-block" type="submit">Guardar</button>
     </form>
-{% for formulario in formularios %}
-    {{ formulario.equipoR }}
-{% endfor %}
 {% endblock %}

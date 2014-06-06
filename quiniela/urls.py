@@ -19,7 +19,7 @@ urlpatterns = patterns('',
     url(r'^crear_torneo/$', 'social.views.crear_torneo'),
     url(r'^enviar_invitaciones/$', 'social.views.enviar_invitaciones'),
     url(r'^invitacion/(?P<invitacion>[\w|\W]+)/$', 'social.views.invitacion'),
-    url(r'^ver_torneo/(?P<id_torneo>\d+)/$', 'social.views.ver_torneo'),
+    #url(r'^ver_torneo/(?P<id_torneo>\d+)/$', 'social.views.ver_torneo'),
     url(r'mi_quiniela/$', 'social.views.mi_quiniela'),
     url(r'^poner_resultados/(?P<id_grupo>\d+)/$', 'apuesta.views.resultados_grupo'),
 )
