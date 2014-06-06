@@ -3,8 +3,29 @@
     Grupo A
 {% endblock %}
 {% block seccion-contenido %}
+    <form action="">
     <table>
-        <th>Equipo Local</th>
-        <th>Equipo Visitante</th>
+        {% for partido in partidos %}
+            <tr>
+                <td>{{ partido.fecha }} {{ partido.hora }}</td>
+            </tr>
+            <tr>
+                <td>{{ pardito.equipoL.bandera }}</td>
+                <td>{{ partido.equipoV.bandera }}</td>
+            </tr>
+            <tr>
+                <td>{{ partido.equipoL }}</td>
+                <td>{{ partido.equipoV }}</td>
+            </tr>
+            <tr>
+                <td><input type="text" name="resultado-{{ partido.id }}-{{ partido.equipoL.id }}"/></td>
+                <td><input type="text" name="resultado-{{ partido.id }}-{{ partido.equipoV.id }}"/></td>
+            </tr>
+        {% endfor %}
     </table>
+    <button class="btn btn-lg btn-primary btn-block" type="submit">Sign in</button>
+    </form>
+{% for formulario in formularios %}
+    {{ formulario.equipoR }}
+{% endfor %}
 {% endblock %}
