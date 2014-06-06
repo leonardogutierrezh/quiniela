@@ -1,0 +1,13 @@
+{% extends 'admin.html' %}
+{% block titulo %}
+    {{ torneo.nombre }}
+{% endblock %}
+{% block seccion-contenido %}
+    <div class="col-sm-6">
+        <ul>
+            {% for grupo in grupos %}
+                <li><a href="/poner_resultados/{{ grupo.id }}">{{ grupo.nombre }}</a></li>
+            {% endfor %}
+        </ul>
+    </div>
+{% endblock %}
