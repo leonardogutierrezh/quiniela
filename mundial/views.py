@@ -60,3 +60,7 @@ def perfil(request):
     torneos = Torneo.objects.filter()
     return render_to_response('mundial/perfil.html', {'torneos':torneos, 'usuario':usuario}, context_instance=RequestContext(request))
 
+
+def logout_views(request):
+    logout(request)
+    return HttpResponseRedirect('/')

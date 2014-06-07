@@ -86,3 +86,22 @@ def invitacion(request,invitacion):
 def mi_quiniela(request):
     grupos = Grupo.objects.all()
     return render_to_response('social/mi_quiniela.html', {'grupos': grupos}, context_instance=RequestContext(request))
+
+@login_required(login_url='/')
+def ver_torneo(request,id_torneo):
+    torneo = Torneo.objects.get(id=id_torneo)
+    puntaje_admin = Puntaje.objects.get(usuario=torneo.administrador)
+    tupla_admin = (torneo.administrador,puntaje_admin.puntaje)
+    lista = []
+    lista.append(tupla_admin)
+    participantes = torneo.miembros.all()
+    for participante in participantes:
+        if Puntaje.objects.filter(usuario=participante):
+            tupla = (participante, Puntaje.objects.get(usuario=participante).puntaje)
+        else:
+            tupla = (participante,0)
+        lista.append(tupla)
+    ordenados = sorted(lista, key=lambda tupla: tupla[1])
+    ordenados_mayor = ordenados[:: -1]
+    print ordenados_mayor
+    return render_to_response('social/ver_torneo.html', {'participantes':ordenados_mayor, 'torneo': torneo}, context_instance=RequestContext(request))
