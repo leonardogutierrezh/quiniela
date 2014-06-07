@@ -56,6 +56,11 @@ def registrarse(request):
 @login_required(login_url='/')
 def perfil(request):
     usuario = request.user
+    #puntaje =
     torneos = Torneo.objects.filter()
     return render_to_response('mundial/perfil.html', {'torneos':torneos, 'usuario':usuario}, context_instance=RequestContext(request))
 
+
+def logout_views(request):
+    logout(request)
+    return HttpResponseRedirect('/')

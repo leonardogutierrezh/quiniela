@@ -12,3 +12,7 @@ class Invitacion(models.Model):
     torneo = models.ForeignKey(Torneo)
     hash = models.CharField(max_length=100)
     estado = models.CharField(max_length=1)
+
+class Puntaje(models.Model):
+    usuario = models.ForeignKey(User)
+    puntaje = models.IntegerField()
