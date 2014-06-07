@@ -53,6 +53,12 @@ def resultados_grupo(request, id_grupo):
                         apuesta = Apuesta.objects.get(usuario=usuario, partido=partido)
                         apuesta.golesL = equipoL
                         apuesta.golesV = equipoV
+                        if apuesta.golesV > apuesta.golesL:
+                            apuesta.ganador = 'V'
+                        elif apuesta.golesL > apuesta.golesV:
+                            apuesta.ganador = 'L'
+                        else:
+                            apuesta.ganador = 'E'
                         apuesta.save()
                     else:
                         apuesta = Apuesta.objects.create(partido=partido, golesL=equipoL, golesV=equipoV,
@@ -70,3 +76,23 @@ def resultados_grupo(request, id_grupo):
 
         return render_to_response('apuesta/resultados_grupo.html', {'partidos':lista, 'grupo': grupo}, context_instance=RequestContext(request))
     return HttpResponseRedirect('/ver_grupo/' + id_grupo)
+
+def calcular_puntos_grupos(request):
+    configuracion = ConfiguracionPuntos.objects.get(fase='G')
+    usuarios = User.objects.all()
+    for usuario in usuarios:
+        if Puntaje.objects.filter(usuario=usuario):
+            puntaje = Puntaje.objects.get(usuario=usuario)
+            puntaje.puntaje = 0
+        else:
+            puntaje = Puntaje.objects.create(usuario=usuario, puntaje=0)
+        apuestas = Apuesta.objects.filter(usuario=usuario, partido__fase='G').exclude(partido__ganador='N')
+        for apuesta in apuestas:
+            if apuesta.ganador == apuesta.partido.ganador:
+                puntaje.puntaje = int(puntaje.puntaje + configuracion.puntos)
+                print int(puntaje.puntaje + configuracion.puntos)
+                if apuesta.golesL == apuesta.partido.golesL and apuesta.golesV == apuesta.partido.golesC:
+                    puntaje.puntaje = int(puntaje.puntaje + configuracion.puntos*configuracion.factor)
+                    print int(puntaje.puntaje + configuracion.puntos*configuracion.factor)
+        puntaje.save()
+    return HttpResponseRedirect('/')

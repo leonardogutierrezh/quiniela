@@ -31,3 +31,8 @@ class Partido(models.Model):
 class Configuracion(models.Model):
     tipo = models.CharField(max_length = 30)
     valor = models.BooleanField(default=True)
+
+class ConfiguracionPuntos(models.Model):
+    fase = models.CharField(max_length=1)
+    puntos = models.IntegerField()
+    factor = models.FloatField()

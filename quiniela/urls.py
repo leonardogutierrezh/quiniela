@@ -22,4 +22,5 @@ urlpatterns = patterns('',
     #url(r'^ver_torneo/(?P<id_torneo>\d+)/$', 'social.views.ver_torneo'),
     url(r'mi_quiniela/$', 'social.views.mi_quiniela'),
     url(r'^poner_resultados/(?P<id_grupo>\d+)/$', 'apuesta.views.resultados_grupo'),
+    url(r'^calcular_puntos/$', 'apuesta.views.calcular_puntos_grupos'),
 )
