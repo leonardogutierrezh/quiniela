@@ -8,6 +8,7 @@ from django.contrib.auth import login, authenticate, logout
 from django.contrib.auth.decorators import login_required
 from social.models import *
 from social.forms import *
+from mundial.models import *
 
 def login_acceso(request):
     if request.method == 'POST':
@@ -64,3 +65,10 @@ def perfil(request):
 def logout_views(request):
     logout(request)
     return HttpResponseRedirect('/')
+
+def inicio(request):
+    puntajes = Puntaje.objects.order_by('-puntaje')[:10]
+    partidos = Partido.objects.exclude(ganador='N').order_by('-fecha')
+    for partido in partidos:
+        print partido.fecha
+    return render_to_response('mundial/index.html', {'puntajes': puntajes, 'partidos': partidos}, context_instance=RequestContext(request))
