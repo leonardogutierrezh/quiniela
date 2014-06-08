@@ -1,8 +1,14 @@
-    <div class="container">
+{% extends 'admin.html' %}
+{% load bootstrap %}
+{% block seccion-contenido %}
+
+<div class="container">
+	<div class="login-container">
+
 
       <form class="form-signin" id='formulario' method='post' action=''>{% csrf_token %}
 
-        <h2 class="form-signin-heading">Registrarse</h2>
+        <h2 class="form-signin-heading">Regístrarste</h2>
  {% comment %}
  	       <input type="text" class="form-control" placeholder="Email address" autofocus>
          <input type="password" class="form-control" placeholder="Password">
@@ -11,10 +17,12 @@
         </label>
 
  {% endcomment %}
- {{formulario }}
- {{ formulario_email }}
-        <button class="btn btn-lg btn-primary btn-block" type="submit">Sign in</button>
+ {{formulario | bootstrap }}
+ {{ formulario_email | bootstrap}}
+        <button class="btn btn-lg btn-primary btn-block" type="submit">Registrarme</button>
 		{{error_log}}
       </form>
 
-    </div> <!-- /container -->
+	</div>
+</div> <!-- /container -->
+{% endblock %}
