@@ -34,7 +34,8 @@ def login_acceso(request):
                 return render_to_response('login.html',{'formulario':formulario,'error_log':error_log}, context_instance=RequestContext(request))
     else:
         formulario = AuthenticationForm()
-    return render_to_response('login.html',{'formulario':formulario}, context_instance=RequestContext(request))
+    no_login = 1
+    return render_to_response('login.html',{'formulario':formulario, 'no_login': no_login}, context_instance=RequestContext(request))
 
 def registrarse(request):
     if request.method == 'POST':
@@ -52,7 +53,8 @@ def registrarse(request):
     else:
         formulario = UserCreationForm()
         formulario_email = EmailForm()
-    return render_to_response('mundial/registrarse.html', {'formulario': formulario, 'formulario_email': formulario_email}, context_instance=RequestContext(request))
+    no_login = 1
+    return render_to_response('mundial/registrarse.html', {'no_login': no_login,'formulario': formulario, 'formulario_email': formulario_email}, context_instance=RequestContext(request))
 
 @login_required(login_url='/')
 def perfil(request):
@@ -71,4 +73,5 @@ def inicio(request):
     partidos = Partido.objects.exclude(ganador='N').order_by('-fecha')
     for partido in partidos:
         print partido.fecha
-    return render_to_response('mundial/index.html', {'puntajes': puntajes, 'partidos': partidos}, context_instance=RequestContext(request))
+    no_login = 1
+    return render_to_response('mundial/index.html', {'puntajes': puntajes, 'partidos': partidos, 'no_login': no_login}, context_instance=RequestContext(request))

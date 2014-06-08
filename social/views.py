@@ -80,8 +80,9 @@ def invitacion(request,invitacion):
             return HttpResponseRedirect("/perfil")
         formulario = UserCreationForm()
         formulario_email = EmailForm(initial={'email': invitacion.correo})
+    no_login = 1
     return render_to_response('social/registrarse_invitado.html', {'formulario':formulario,
-                                                                   'formulario_email':formulario_email}, context_instance=RequestContext(request))
+                                                                   'formulario_email':formulario_email, 'no_login': no_login}, context_instance=RequestContext(request))
 @login_required(login_url='/')
 def mi_quiniela(request):
     grupos = Grupo.objects.all()

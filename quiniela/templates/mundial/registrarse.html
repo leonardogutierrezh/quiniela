@@ -1,3 +1,6 @@
+{% extends 'admin.html' %}
+{% load bootstrap %}
+{% block seccion-contenido %}
     <div class="container">
 
       <form class="form-signin" id='formulario' method='post' action=''>{% csrf_token %}
@@ -18,3 +21,4 @@
       </form>
 
     </div> <!-- /container -->
+{% endblock %}
