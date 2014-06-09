@@ -3,11 +3,20 @@
     {{ torneo.nombre }}
 {% endblock %}
 {% block seccion-contenido %}
-    <div class="col-sm-6">
-        <ul>
-            {% for grupo in grupos %}
-                <li><a href="/poner_resultados/{{ grupo.id }}">{{ grupo.nombre }}</a></li>
+    <div class="row">
+    {% for grupo in grupos %}
+        <div class="col-md-6">
+            <a href="/poner_resultados/{{ grupo.0.id }}">{{ grupo.0.nombre }}</a>
+            {% for partido in grupo.1 %}
+                {{ partido.partido.equipoL.pais }} <img src="{{ MEDIA_URL }}{{ partido.partido.equipoL.bandera }}" height="30" width="43"> {{ partido.golesL }}
+                {{ partido.partido.equipoV.pais }} <img src="{{ MEDIA_URL }}{{ partido.partido.equipoV.bandera }}" height="30" width="43"> {{ partido.golesV }}
             {% endfor %}
-        </ul>
+        </div>
+
+    {% endfor %}
+    </div>
+
+    <div class="col-sm-6">
+
     </div>
 {% endblock %}

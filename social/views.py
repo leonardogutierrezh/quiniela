@@ -9,6 +9,7 @@ from django.contrib.auth.decorators import login_required
 from social.models import *
 from mundial.models import *
 from social.forms import *
+from apuesta.models import Apuesta
 from django.forms.formsets import formset_factory
 import time
 from django.core.mail import EmailMessage, EmailMultiAlternatives
@@ -86,7 +87,12 @@ def invitacion(request,invitacion):
 @login_required(login_url='/')
 def mi_quiniela(request):
     grupos = Grupo.objects.all()
-    return render_to_response('social/mi_quiniela.html', {'grupos': grupos}, context_instance=RequestContext(request))
+    lista = []
+    for grupo in grupos:
+        apuestas = Apuesta.objects.filter(partido__equipoL__grupo = grupo)
+        tupla = (grupo,apuestas)
+        lista.append(tupla)
+    return render_to_response('social/mi_quiniela.html', {'grupos': lista}, context_instance=RequestContext(request))
 
 @login_required(login_url='/')
 def ver_torneo(request,id_torneo):
