@@ -89,7 +89,7 @@ def mi_quiniela(request):
     grupos = Grupo.objects.all()
     lista = []
     for grupo in grupos:
-        apuestas = Apuesta.objects.filter(partido__equipoL__grupo = grupo)
+        apuestas = Apuesta.objects.filter(partido__equipoL__grupo = grupo, usuario=request.user)
         tupla = (grupo,apuestas)
         lista.append(tupla)
     return render_to_response('social/mi_quiniela.html', {'grupos': lista}, context_instance=RequestContext(request))
@@ -97,8 +97,10 @@ def mi_quiniela(request):
 @login_required(login_url='/')
 def ver_torneo(request,id_torneo):
     torneo = Torneo.objects.get(id=id_torneo)
-    puntaje_admin = Puntaje.objects.get(usuario=torneo.administrador)
-    tupla_admin = (torneo.administrador,puntaje_admin.puntaje)
+    if Puntaje.objects.filter(usuario=torneo.administrador):
+        tupla_admin = (torneo.administrador, Puntaje.objects.get(usuario=torneo.administrador).puntaje)
+    else:
+        tupla_admin = (torneo.administrador,0)
     lista = []
     lista.append(tupla_admin)
     participantes = torneo.miembros.all()

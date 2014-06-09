@@ -12,19 +12,17 @@
 				<h4><a href="/poner_resultados/{{ grupo.0.id }}">Grupo {{ grupo.0.nombre }}  <i class="fa fa-pencil fa-fw"></i>modificar</a></h4>
 			</div>
 			<div class="panel-body">
-				    {% for partido in grupo.1 %}
-<div class="col-md-6">
-					<div class="miquiniela-equipos">
-					<img src="{{ MEDIA_URL }}{{ partido.partido.equipoL.bandera }}" height="30" width="43" title="{{ partido.partido.equipoL.pais }}" style="margin-right: 10px;"> 
-					{{ partido.golesL }}
-vs
-					{{ partido.golesV }}
-					<img src="{{ MEDIA_URL }}{{ partido.partido.equipoV.bandera }}" height="30" width="43" title="{{ partido.partido.equipoV.pais }}" style="margin-left: 10px;">
+				{% for partido in grupo.1 %}
+                <div class="col-md-6">
+				    <div class="miquiniela-equipos">
+					    <img src="{{ MEDIA_URL }}{{ partido.partido.equipoL.bandera }}" height="30" width="43" title="{{ partido.partido.equipoL.pais }}" style="margin-right: 10px;">
+					    {{ partido.golesL }}
+                        vs
+					    {{ partido.golesV }}
+					    <img src="{{ MEDIA_URL }}{{ partido.partido.equipoV.bandera }}" height="30" width="43" title="{{ partido.partido.equipoV.pais }}" style="margin-left: 10px;">
 					</div>
-</div>
-					
-
-				    {% endfor %}
+                </div>
+				{% endfor %}
 			</div>
 		</div>
 	</div>
