@@ -76,6 +76,8 @@ def logout_views(request):
     return HttpResponseRedirect('/')
 
 def inicio(request):
+    if request.user.is_authenticated():
+        return HttpResponseRedirect("/perfil")
     if request.method == 'POST':
         formulario = AuthenticationForm(request.POST)
         if formulario.is_valid:
@@ -106,6 +108,7 @@ def inicio(request):
     return render_to_response('mundial/index.html', { 'no_login': no_login,
                                                      'formulario': formulario}, context_instance=RequestContext(request))
 
+@login_required(login_url='/')
 def clasificacion(request):
     grupos = Grupo.objects.all()
     lista = []
