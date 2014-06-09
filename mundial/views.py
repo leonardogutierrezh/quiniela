@@ -91,3 +91,12 @@ def inicio(request):
     no_login = 1
     return render_to_response('mundial/index.html', {'puntajes': puntajes, 'partidos': partidos, 'no_login': no_login,
                                                      'formulario': formulario, 'formulario_email': formulario_email}, context_instance=RequestContext(request))
+
+def clasificacion(request):
+    grupos = Grupo.objects.all()
+    lista = []
+    for grupo in grupos:
+        miembros = Equipo.objects.filter(grupo=grupo).order_by('-puntos','golesF')
+        tupla = (grupo,miembros)
+        lista.append(tupla)
+    return render_to_response('mundial/clasificacion.html', {'grupos': lista}, context_instance=RequestContext(request))

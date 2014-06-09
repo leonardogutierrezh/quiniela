@@ -1,0 +1,20 @@
+{% extends 'admin.html' %}
+{% load bootstrap %}
+{% block titulo %}
+    Clasificacion
+{% endblock %}
+{% block seccion-contenido %}
+    {% for grupo in grupos %}
+        <div class="col-sm-6">
+
+            <ul>
+                {% for equipo in grupo.1 %}
+                    <li>
+                        <img src="{{ MEDIA_URL }}{{ equipo.bandera }}" height="30" width="43"> {{ equipo.pais }} {{ equipo.puntos }}
+                        {{ equipo.golesF }} {{ equipo.golesC }} {{ equipo.partidosG }} {{ equipo.partidosP }} {{ equipo.empate }}
+                    </li>
+                {% endfor %}
+            </ul>
+        </div>
+    {% endfor %}
+{% endblock %}

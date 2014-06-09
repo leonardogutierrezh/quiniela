@@ -10,6 +10,7 @@ class Equipo(models.Model):
     pais = models.CharField(max_length=100)
     golesF = models.IntegerField()
     golesC = models.IntegerField()
+    puntos = models.IntegerField()
     partidosG = models.IntegerField()
     partidosP = models.IntegerField()
     empates = models.IntegerField()

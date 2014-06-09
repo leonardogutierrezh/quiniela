@@ -63,6 +63,13 @@ def resultados_grupo(request, id_grupo):
                     else:
                         apuesta = Apuesta.objects.create(partido=partido, golesL=equipoL, golesV=equipoV,
                                                          usuario=usuario, ganador='N')
+                        if apuesta.golesV > apuesta.golesL:
+                            apuesta.ganador = 'V'
+                        elif apuesta.golesL > apuesta.golesV:
+                            apuesta.ganador = 'L'
+                        else:
+                            apuesta.ganador = 'E'
+                        apuesta.save()
                 return HttpResponseRedirect('/mi_quiniela')
         else:
             for partido in partidos:
@@ -87,8 +94,10 @@ def calcular_puntos_grupos(request):
         else:
             puntaje = Puntaje.objects.create(usuario=usuario, puntaje=0)
         apuestas = Apuesta.objects.filter(usuario=usuario, partido__fase='G').exclude(partido__ganador='N')
+        print apuestas
         for apuesta in apuestas:
             if apuesta.ganador == apuesta.partido.ganador:
+                print "entre"
                 puntaje.puntaje = int(puntaje.puntaje + configuracion.puntos)
                 print int(puntaje.puntaje + configuracion.puntos)
                 if apuesta.golesL == apuesta.partido.golesL and apuesta.golesV == apuesta.partido.golesC:
