@@ -18,7 +18,7 @@ from django.db.models import Q
 
 @login_required(login_url='/')
 def crear_torneo(request):
-    invitados_forms = formset_factory(InvitacionForm, can_delete = True, extra = 1)
+    invitados_forms = formset_factory(InvitacionForm, can_delete = True, extra = 0)
     if request.method == 'POST':
         formulario = TorneoForm(request.POST)
         formulario_invitados = invitados_forms(request.POST)
@@ -38,6 +38,35 @@ def crear_torneo(request):
     else:
         formulario = TorneoForm()
     return render_to_response('social/crear_torneo.html', {'invitados_forms': invitados_forms, 'formulario': formulario}, context_instance=RequestContext(request))
+
+def editar_torneo(request, id_torneo):
+    torneo = Torneo.objects.get(id=id_torneo)
+    factory = formset_factory(InvitacionForm, can_delete = True, extra = 0)
+
+    invitados_forms = factory(queryset=torneo.miembros.all())
+
+    if request.method == 'POST':
+        formulario = TorneoForm(request.POST)
+        formulario_invitados = invitados_forms(request.POST)
+        if formulario_invitados.is_valid() and formulario.is_valid():
+            torneo.nombre = nombre=formulario.cleaned_data['nombre']
+            torneo.administrador = request.user
+            torneo.save()
+            for invitado in formulario_invitados:
+                if not invitado.cleaned_data['DELETE']:
+                    email = invitado.cleaned_data['email']
+                    hash =str(torneo.id) + str(time.time()).split('.')[0] + email
+                    if not(Invitado.objects.filter(correo=email, torneo=torneo)) and not(Invitado.objects.filter()):
+                        Invitacion.objects.create(correo=email, torneo=torneo, hash=hash, estado='N')
+                print invitado.cleaned_data['email']
+                print invitado.cleaned_data['DELETE']
+            return HttpResponseRedirect('/perfil')
+        else:
+            invitados_forms = formulario_invitados
+    else:
+        formulario = TorneoForm()
+    return render_to_response('social/crear_torneo.html', {'invitados_forms': invitados_forms, 'formulario': formulario}, context_instance=RequestContext(request))
+
 
 def enviar_invitaciones(request):
     invitaciones = Invitacion.objects.filter(estado='N')
@@ -69,6 +98,7 @@ def invitacion(request,invitacion):
             usuario.last_name = formulario_email.cleaned_data['apellido']
             usuario.save()
             usuario.backend = 'django.contrib.auth.backends.ModelBackend'
+            login(request,usuario)
             login(request,usuario)
             invitacion.torneo.miembros.add(usuario)
             invitacion.delete()

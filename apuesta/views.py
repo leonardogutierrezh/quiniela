@@ -29,7 +29,7 @@ def resultados_grupo(request, id_grupo):
         usuario = request.user
         grupo = Grupo.objects.get(id=id_grupo)
         locales = Equipo.objects.filter(grupo=grupo)
-        partidos = Partido.objects.filter(equipoL__id__in=locales)
+        partidos = Partido.objects.filter(equipoL__id__in=locales).order_by('fecha')
         lista = []
 
         if request.method == 'POST':
