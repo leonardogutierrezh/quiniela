@@ -21,7 +21,7 @@
 
                 {% for equipo in grupo.1 %}
 		<div class="clasificación-equipos">
-			<div class="clasificación-equipo"><img src="{{ MEDIA_URL }}{{ equipo.bandera }}" height="30" width="43" title="{{ equipo.pais }}"></div><div class="clasificación-g">{{ equipo.partidosG }}</div><div class="clasificación-p">{{ equipo.partidosP }}</div><div class="clasificación-e">{{ equipo.Empates }}</div><div class="clasificación-gf">{{ equipo.golesF }}</div><div class="clasificación-gc">{{ equipo.golesC }}</div><div class="clasificación-puntos">{{ equipo.puntos }}</div> 
+			<div class="clasificación-equipo"><img src="{{ MEDIA_URL }}{{ equipo.bandera }}" height="30" width="43" title="{{ equipo.pais }}"></div><div class="clasificación-g">{{ equipo.partidosG }}</div><div class="clasificación-p">{{ equipo.partidosP }}</div><div class="clasificación-e">{{ equipo.empates }}</div><div class="clasificación-gf">{{ equipo.golesF }}</div><div class="clasificación-gc">{{ equipo.golesC }}</div><div class="clasificación-puntos">{{ equipo.puntos }}</div>
 		</div>
                 {% endfor %}
 
