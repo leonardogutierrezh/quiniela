@@ -3,13 +3,106 @@
     Hola {{ usuario.first_name }} {{ usuario.last_name }}
 {% endblock %}
 {% block seccion-contenido %}
+<div class="bloque-1-index">
+    <h4>Ultimos Resultados</h4>
+    {% for partido in partidos %}
+        <div class="partido-home">
+	<div  class="apuesta-fechas">
+		{{ partido.fecha }} {{ partido.hora }}
+	</div>
 
+
+	<div class="apuesta-banderas-l">
+		<img src="{{ MEDIA_URL }}{{ partido.equipoL.bandera }}" height="30" width="43">
+	</div  class="apuesta-equipos">
+<div class="centrado-apuestas">
+	<div class="apuesta-equipos-l">
+		{{ partido.equipoL }}
+	</div>
+                <div class="apuesta-resultados-l">
+                    <div class=" ">
+                        {{ partido.golesL }}
+
+                    </div>
+                </div>
+  		 <div class="apuesta-resultados-v">
+                    <div class=" ">
+                        {{ partido.golesC }}
+                    </div>
+                </div>
+	<div class="apuesta-equipos-v">
+		{{ partido.equipoV }}
+	</div>
+	</div>
+	<div class="apuesta-banderas-v">
+		<img src="{{ MEDIA_URL }}{{ partido.equipoV.bandera }}" height="30" width="43">
+	</div>
+
+</div>
+    {% endfor %}
+<div class="bloque-1-index">
+    <h4>Proximos juegos</h4>
+    {% for proximo in proximos %}
+        <div class="partido-home">
+	<div  class="apuesta-fechas">
+		{{ proximo.0.fecha }} {{ proximo.0.hora }}
+	</div>
+
+
+	<div class="apuesta-banderas-l">
+		<img src="{{ MEDIA_URL }}{{ proximo.equipoL.bandera }}" height="30" width="43">
+	</div  class="apuesta-equipos">
+<div class="centrado-apuestas">
+	<div class="apuesta-equipos-l">
+		{{ proximo.equipoL }}
+	</div>
+                <div class="apuesta-resultados-l">
+                    <div class=" ">
+
+
+                    </div>
+                </div>
+  		 <div class="apuesta-resultados-v">
+                    <div class=" ">
+
+                    </div>
+                </div>
+	<div class="apuesta-equipos-v">
+		{{ proximo.equipoV }}
+	</div>
+	</div>
+	<div class="apuesta-banderas-v">
+		<img src="{{ MEDIA_URL }}{{ proximo.equipoV.bandera }}" height="30" width="43">
+	</div>
+
+</div>
+    {% endfor %}
+</div>
+<div class="bloque-2-index">
+    <h4>Top 10</h4>
+<div class="top10">
+    <ul>
+        {% for puntaje in puntajes %}
+            <li><div class="top10-nombre">{{ puntaje.usuario.first_name }} {{ puntaje.usuario.last_name }}</div><div class="top10-puntos"> <strong>{{ puntaje.puntaje }}</strong></div></li>
+        {% endfor %}
+    </ul>
+</div>
+</div>
+</div>
 <ul>
     {% for torneo in torneos_admin %}
         <li><a href="/ver_torneo/{{ torneo.id }}">{{ torneo.nombre }}{{ torneo.administrador.first_name }}</a></li>
     {% endfor %}
     {% for torneo in torneos %}
         <li><a href="/ver_torneo/{{ torneo.id }}">{{ torneo.nombre }}{{ torneo.administrador.first_name }}</a></li>
+    {% endfor %}
+</ul>
+
+<ul>
+    {% for invitacion in invitaciones %}
+        <li>
+            {{ invitacion.torneo.nombre }}<a href="/invitacion/{{ invitacion.hash }}">Aceptar</a><a href="/rechazar_invitacion">Rechazar</a>
+        </li>
     {% endfor %}
 </ul>
 {% endblock %}

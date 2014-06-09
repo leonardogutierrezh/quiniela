@@ -60,9 +60,15 @@ def registrarse(request):
 def perfil(request):
     usuario = request.user
     lista = []
+    invitaciones = Invitacion.objects.filter(correo=usuario.email)
     torneo_admin = Torneo.objects.filter(administrador= request.user)
     torneos = Torneo.objects.filter(miembros__id = request.user.id )
-    return render_to_response('mundial/perfil.html', {'torneos':torneos, 'torneos_admin': torneo_admin,  'usuario':usuario}, context_instance=RequestContext(request))
+    puntajes = Puntaje.objects.order_by('-puntaje')[:10]
+    partidos = Partido.objects.exclude(ganador='N').order_by('-fecha')[:4]
+    proximos = Partido.objects.filter(ganador='N').order_by('fecha')[:4]
+    return render_to_response('mundial/perfil.html', {'torneos':torneos, 'torneos_admin': torneo_admin,
+                                                      'usuario':usuario, 'invitaciones': invitaciones,
+                                                      'puntajes': puntajes, 'partidos': partidos, 'proximos': proximos }, context_instance=RequestContext(request))
 
 
 def logout_views(request):
