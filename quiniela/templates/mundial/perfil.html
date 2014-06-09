@@ -105,7 +105,7 @@
 			<ul>
 			    {% for invitacion in invitaciones %}
 				<li>
-				    {{ invitacion.torneo.nombre }} (<a href="/invitacion/{{ invitacion.hash }}">Aceptar</a> | <a href="/rechazar_invitacion">Rechazar</a>)
+				    {{ invitacion.torneo.nombre }} (<a href="/invitacion/{{ invitacion.hash }}">Aceptar</a> | <a href="/rechazar/{{ invitacion.torneo.id }}">Rechazar</a>)
 				</li>
 			    {% endfor %}
 			</ul>

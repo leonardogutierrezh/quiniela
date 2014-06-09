@@ -27,4 +27,5 @@ urlpatterns = patterns('',
     url(r'^clasificacion/$', 'mundial.views.clasificacion'),
     url(r'^logout/$', 'mundial.views.logout_views'),
     url(r'^email_autocomplete', 'social.views.email_autocomplete'),
+    url(r'^rechazar/(?P<id_torneo>\d+)/$', 'social.views.rechazar_invitacion')
 )

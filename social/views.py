@@ -133,3 +133,8 @@ def email_autocomplete(request):
        })
 
    return HttpResponse(json.dumps(opciones) , mimetype= 'application/json')
+
+@login_required(login_url='/')
+def rechazar_invitacion(request, id_torneo):
+    Invitacion.objects.get(correo=request.user.email, torneo=Torneo.objects.get(id=id_torneo)).delete()
+    return HttpResponseRedirect('/perfil')
