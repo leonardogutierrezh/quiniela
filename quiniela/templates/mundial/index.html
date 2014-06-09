@@ -1,0 +1,49 @@
+{% extends 'admin.html' %}
+{% block seccion-contenido %}
+    <div class="col-md-6">
+    <h4>Ultimos Resultados</h4>
+    {% for partido in partidos %}
+        <div>
+	<div  class="apuesta-fechas">
+		{{ partido.0.fecha }} {{ partido.0.hora }}
+	</div>
+
+
+	<div class="apuesta-banderas-l">
+		<img src="{{ MEDIA_URL }}{{ partido.equipoL.bandera }}" height="30" width="43">
+	</div  class="apuesta-equipos">
+<div class="centrado-apuestas">
+	<div class="apuesta-equipos-l">
+		{{ partido.equipoL }}
+	</div>
+                <div class="form-group  apuesta-resultados">
+                    <div class=" ">
+                        {{ partido.golesL }}
+
+                    </div>
+                </div>
+  		 <div class="form-group apuesta-resultados">
+                    <div class=" ">
+                        {{ partido.golesC }}
+                    </div>
+                </div>
+	<div class="apuesta-equipos-v">
+		{{ partido.equipoV }}
+	</div>
+	</div>
+	<div class="apuesta-banderas-v">
+		<img src="{{ MEDIA_URL }}{{ partido.equipoV.bandera }}" height="30" width="43">
+	</div>
+
+</div>
+    {% endfor %}
+    </div>
+    <div>
+    <h4>Top 10</h4>
+    <ul>
+        {% for puntaje in puntajes %}
+            <li>{{ puntaje.usuario.first_name }} {{ puntaje.usuario.last_name }} <strong>{{ puntaje.puntaje }}</strong></li>
+        {% endfor %}
+    </ul>
+    </div>
+{% endblock %}

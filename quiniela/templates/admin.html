@@ -43,15 +43,20 @@
 
         <nav class="navbar navbar-default navbar-static-top" role="navigation" style="margin-bottom: 0">
             <div class="navbar-header">
-		<a class="navbar-brand" href="#"><img src="{{ STATIC_URL }}img/pajaro.png" height="30"> Quiniela Turpial</a>		
+		<a class="navbar-brand" href="/"><img src="{{ STATIC_URL }}img/pajaro.png" height="30"> Quiniela Turpial</a>
                 
             </div>
             <!-- /.navbar-header -->
 
             <ul class="nav navbar-top-links navbar-right">
-                <li>
-
-                    <a  href="/mi_quiniela">
+                {% if no_login %}
+                <li><a href="/login"><i class="fa fa-sign-in fa-fw"></i></a>
+                </li>
+                <li><a href="/registrarse"><i class="fa fa-pencil fa-fw"></i></a>
+                </li>
+                {% else %}
+                                <li>
+                    <a  href="/mi_quiniela/">
                         <i class="fa fa-male fa-fw"></i>Mi quiniela</i>
                     </a>
 
@@ -81,6 +86,8 @@
                 </li>
                 <li><a href="/logout"><i class="fa fa-sign-out fa-fw"></i></a>
                 </li>
+                {% endif %}
+
                 <!-- /.dropdown -->
             </ul>
             <!-- /.navbar-top-links -->
