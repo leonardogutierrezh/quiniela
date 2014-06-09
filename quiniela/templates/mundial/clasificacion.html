@@ -7,14 +7,30 @@
     {% for grupo in grupos %}
         <div class="col-sm-6">
 
-            <ul>
+<div class="panel panel-primary">
+      <div class="panel-heading">
+        <h4>Grupo {{ grupo.0.nombre }}</h4>
+      </div>
+
+
+<div class="panel-body">
+
+		<div class="clasificación-equipos">
+			<div class="clasificación-equipo">Equipo</div><div class="clasificación-g">G</div><div class="clasificación-p">P</div><div class="clasificación-e">E</div><div class="clasificación-gf">GF</div><div class="clasificación-gc">GC</div><div class="clasificación-puntos">Puntos</div> 
+		</div>
+
                 {% for equipo in grupo.1 %}
-                    <li>
-                        <img src="{{ MEDIA_URL }}{{ equipo.bandera }}" height="30" width="43"> {{ equipo.pais }} {{ equipo.puntos }}
-                        {{ equipo.golesF }} {{ equipo.golesC }} {{ equipo.partidosG }} {{ equipo.partidosP }} {{ equipo.empate }}
-                    </li>
+		<div class="clasificación-equipos">
+			<div class="clasificación-equipo"><img src="{{ MEDIA_URL }}{{ equipo.bandera }}" height="30" width="43" title="{{ equipo.pais }}"></div><div class="clasificación-g">{{ equipo.partidosG }}</div><div class="clasificación-p">{{ equipo.partidosP }}</div><div class="clasificación-e">{{ equipo.Empates }}</div><div class="clasificación-gf">{{ equipo.golesF }}</div><div class="clasificación-gc">{{ equipo.golesC }}</div><div class="clasificación-puntos">{{ equipo.puntos }}</div> 
+		</div>
                 {% endfor %}
-            </ul>
+
+
+      </div>
+    </div>
+
+
         </div>
     {% endfor %}
 {% endblock %}
+

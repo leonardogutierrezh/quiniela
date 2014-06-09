@@ -50,9 +50,9 @@
 
             <ul class="nav navbar-top-links navbar-right">
                 {% if no_login %}
-                <li><a href="/login"><i class="fa fa-sign-in fa-fw"></i></a>
+                <li><a href="/login"><i class="fa fa-sign-in fa-fw"></i> Login </a>
                 </li>
-                <li><a href="/registrarse"><i class="fa fa-pencil fa-fw"></i></a>
+                <li><a href="/registrarse"><i class="fa fa-pencil fa-fw"></i> Registrarse</a>
                 </li>
                 {% else %}
                                 <li>
@@ -63,7 +63,7 @@
                     <!-- /.dropdown-messages -->
                 </li>
                 <li>
-                    <a  href="/crear_notificacion/0"">
+                    <a  href="/clasificacion"">
                         <i class="fa fa-globe fa-fw"></i>Clasificación</i>
                     </a>
 
@@ -84,7 +84,7 @@
                     </ul>
                     <!-- /.dropdown-user -->
                 </li>
-                <li><a href="/logout"><i class="fa fa-sign-out fa-fw"></i></a>
+                <li><a href="/logout" alt="Logout" title="Logout"><i class="fa fa-sign-out fa-fw"></i></a>
                 </li>
                 {% endif %}
 

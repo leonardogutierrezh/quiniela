@@ -5,10 +5,17 @@
 <div class="container">
 	<div class="login-container">
 
-      <form class="form-signin" id='formulario' method='post' action=''>{% csrf_token %}
 
+
+      <form class="form-signin" id='formulario' method='post' action=''>{% csrf_token %}
+<div class="panel panel-primary">
+      <div class="panel-heading">
         <h2 class="form-signin-heading">Empieza a jugar</h2>
- {% comment %}
+ 
+	</div>
+	<div class="panel-body">
+{% comment %}
+
  	       <input type="text" class="form-control" placeholder="Email address" autofocus>
          <input type="password" class="form-control" placeholder="Password">
          <label class="checkbox">
@@ -20,6 +27,8 @@
         <button class="btn btn-lg btn-primary btn-block" type="submit">Entrar</button>
 		{{error_log}}
       </form>
+</div>
+</div>
 
     </div> <!-- /container -->
 </div>

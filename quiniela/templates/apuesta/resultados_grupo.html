@@ -1,14 +1,26 @@
 {% extends 'admin.html' %}
 {% block titulo %}
 <div class="container">
-	<div class="apuesta-container">
-    Grupo {{ grupo.nombre }}
-	</div>
+
+Introduce tu quiniela
+
 </div>
 {% endblock %}
 {% block seccion-contenido %}
+
+
+
 <div class="container">
+
 	<div class="apuesta-container">
+		<div class="panel panel-primary">
+			<div class="panel-heading">
+
+    <h4>Grupo {{ grupo.nombre }}</h4>
+			</div>
+		<div class="panel-body">
+
+
 
     <form class="form-signin" id='formulario' method='post' action=''>{% csrf_token %}
 
@@ -62,6 +74,8 @@
     
     <button class="btn btn-lg btn-primary btn-block" type="submit">Guardar</button>
     </form>
+</div>
+</div>
 
 </div>
 </div>

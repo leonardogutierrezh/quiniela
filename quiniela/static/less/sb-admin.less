@@ -23,6 +23,7 @@ html, body{
     padding: 0 15px;
     min-height: 100%;
     background-color: #fff;
+    background: url(/static/img/paper.jpg) fixed;
 }
 
 @media(min-width:768px) {
@@ -161,7 +162,7 @@ margin-right: 20px;
 }
 
 .btn-primary.btn-outline {
-    color: #428bca;
+    color: #65b020;
 }
 
 .btn-success.btn-outline {
@@ -299,20 +300,40 @@ height: 30px;
 	text-align: center;
 }
 .top10{
-width: 450px;
-margin-left: auto;
-margin-right: auto;
+	width: 450px;
+	margin-left: auto;
+	margin-right: auto;
 }
 .top10-nombre{
-width: 50%;
-display: inline-block;
+	width: 50%;
+	display: inline-block;
 }
 .top10-puntos{
-width: 50%;
-display: inline-block;
-text-align: right;
-
+	width: 50%;
+	display: inline-block;
+	text-align: right;
 }
+
+.clasificación-equipos{
+	width: 90%;
+margin-right: auto;
+margin-left: auto;
+margin-bottom: 5px;
+}
+.clasificación-equipo, .clasificación-g, .clasificación-p, .clasificación-e, .clasificación-gf, .clasificación-gc, .clasificación-puntos{
+display: inline-block;
+width: 14%;
+text-align: center;
+}
+.miquiniela-equipos{
+text-align: center;
+margin-bottom: 10px;
+}
+
+.panel-heading a{
+color: #FFF;
+}
+
 
 
 /* Flot Chart Containers */
@@ -396,4 +417,13 @@ table.dataTable thead .sorting:after {
 .show-grid {
     margin: 15px 0;
 }
-
+.btn-primary{
+color: #ffffff;
+background-color: #65b020;
+border-color: #65b020;
+}
+.btn-primary:hover, .btn-primary:focus, .btn-primary:active, .btn-primary.active, .open .dropdown-toggle.btn-primary {
+color: #ffffff;
+background-color: #65b020;
+border-color: #65b020;
+}
