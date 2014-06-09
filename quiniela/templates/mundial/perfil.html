@@ -5,6 +5,9 @@
 {% block seccion-contenido %}
 
 <ul>
+    {% for torneo in torneos_admin %}
+        <li><a href="/ver_torneo/{{ torneo.id }}">{{ torneo.nombre }}{{ torneo.administrador.first_name }}</a></li>
+    {% endfor %}
     {% for torneo in torneos %}
         <li><a href="/ver_torneo/{{ torneo.id }}">{{ torneo.nombre }}{{ torneo.administrador.first_name }}</a></li>
     {% endfor %}
