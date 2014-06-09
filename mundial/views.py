@@ -73,5 +73,21 @@ def inicio(request):
     partidos = Partido.objects.exclude(ganador='N').order_by('-fecha')
     for partido in partidos:
         print partido.fecha
+    if request.method == 'POST':
+        formulario = UserCreationForm(request.POST)
+        formulario_email = EmailForm(request.POST)
+        if formulario.is_valid() and formulario_email.is_valid():
+            usuario = formulario.save()
+            usuario.email = formulario_email.cleaned_data['email']
+            usuario.first_name = formulario_email.cleaned_data['nombre']
+            usuario.last_name = formulario_email.cleaned_data['apellido']
+            usuario.save()
+            usuario.backend = 'django.contrib.auth.backends.ModelBackend'
+            login(request,usuario)
+            return HttpResponseRedirect('/perfil')
+    else:
+        formulario = UserCreationForm()
+        formulario_email = EmailForm()
     no_login = 1
-    return render_to_response('mundial/index.html', {'puntajes': puntajes, 'partidos': partidos, 'no_login': no_login}, context_instance=RequestContext(request))
+    return render_to_response('mundial/index.html', {'puntajes': puntajes, 'partidos': partidos, 'no_login': no_login,
+                                                     'formulario': formulario, 'formulario_email': formulario_email}, context_instance=RequestContext(request))
