@@ -32,6 +32,22 @@ Crear torneo
                 <table id="salas-formset-container" class="table table-stripped">
                     
                     <tbody id="email-formset-body">
+                        {% for miembro in miembros %}
+                        <tr>
+                                <td>
+                                    <div class="form-group">
+
+
+                                        {{ miembro.email }}
+
+
+
+
+                                    </div>
+                                </td>
+
+                            </tr>
+                        {% endfor %}
                         {{ invitados_forms.management_form }}
                         {% for invitadoform in invitados_forms %}
                             <tr>

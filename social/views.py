@@ -41,9 +41,8 @@ def crear_torneo(request):
 
 def editar_torneo(request, id_torneo):
     torneo = Torneo.objects.get(id=id_torneo)
-    factory = formset_factory(InvitacionForm, can_delete = True, extra = 0)
-
-    invitados_forms = factory(queryset=torneo.miembros.all())
+    invitados_forms = formset_factory(InvitacionForm, can_delete = True, extra = 0)
+    miembros = torneo.miembros.all()
 
     if request.method == 'POST':
         formulario = TorneoForm(request.POST)
@@ -65,7 +64,7 @@ def editar_torneo(request, id_torneo):
             invitados_forms = formulario_invitados
     else:
         formulario = TorneoForm()
-    return render_to_response('social/crear_torneo.html', {'invitados_forms': invitados_forms, 'formulario': formulario}, context_instance=RequestContext(request))
+    return render_to_response('social/crear_torneo.html', {'miembros': miembros,'invitados_forms': invitados_forms, 'formulario': formulario}, context_instance=RequestContext(request))
 
 
 def enviar_invitaciones(request):

@@ -89,10 +89,13 @@
 		<div class="panel-body">
 			<ul>
 			    {% for torneo in torneos_admin %}
-				<li><a href="/ver_torneo/{{ torneo.id }}"><strong>{{ torneo.nombre }}</strong></a> - <strong>Admin:</strong> {{ torneo.administrador.first_name }}</li>
+				<li><a href="/ver_torneo/{{ torneo.id }}"><strong>{{ torneo.nombre }}</strong></a> - <strong>Admin:</strong> {{ torneo.administrador.first_name }} <a href="/editar_torneo/{{ torneo.id }}" class="btn-sm btn-default btn-primary">Editar</a></li>
 			    {% endfor %}
 			    {% for torneo in torneos %}
-				<li><a href="/ver_torneo/{{ torneo.id }}"><strong>{{ torneo.nombre }}</strong></a> - <strong>Admin:</strong> {{ torneo.administrador.first_name }}</a></li>
+				<li><a href="/ver_torneo/{{ torneo.id }}"><strong>{{ torneo.nombre }}</strong></a>
+                    - <strong>Admin:</strong> {{ torneo.administrador.first_name }}</a>
+                      <a href="/editar_torneo/{{ torneo.id }}" class="btn-sm btn-default btn-primary">Editar</a>
+                </li>
 			    {% endfor %}
 			</ul>
 		</div>
