@@ -76,28 +76,35 @@ def logout_views(request):
     return HttpResponseRedirect('/')
 
 def inicio(request):
-    puntajes = Puntaje.objects.order_by('-puntaje')[:10]
-    partidos = Partido.objects.exclude(ganador='N').order_by('-fecha')
-    for partido in partidos:
-        print partido.fecha
     if request.method == 'POST':
-        formulario = UserCreationForm(request.POST)
-        formulario_email = EmailForm(request.POST)
-        if formulario.is_valid() and formulario_email.is_valid():
-            usuario = formulario.save()
-            usuario.email = formulario_email.cleaned_data['email']
-            usuario.first_name = formulario_email.cleaned_data['nombre']
-            usuario.last_name = formulario_email.cleaned_data['apellido']
-            usuario.save()
-            usuario.backend = 'django.contrib.auth.backends.ModelBackend'
-            login(request,usuario)
-            return HttpResponseRedirect('/perfil')
+        formulario = AuthenticationForm(request.POST)
+        if formulario.is_valid:
+            print "entre al valid"
+            usuario = request.POST['username']
+            clave = request.POST['password']
+            usuario = usuario.lower()
+            acceso = authenticate(username=usuario, password=clave)
+            if acceso is not None:
+                print "acceso"
+                if acceso.is_active:
+                    print "entre aqui"
+                    print acceso
+                    login(request,acceso)
+                    return HttpResponseRedirect('/perfil')
+                else:
+                    formulario = AuthenticationForm()
+                    return render_to_response('login.html',{'formulario':formulario,'error_log':error_log}, context_instance=RequestContext(request))
+            else:
+                formulario = AuthenticationForm()
+                error_log = "incorret username or password"
+                return render_to_response('login.html',{'formulario':formulario,'error_log':error_log}, context_instance=RequestContext(request))
     else:
-        formulario = UserCreationForm()
+        formulario = AuthenticationForm()
         formulario_email = EmailForm()
+
     no_login = 1
-    return render_to_response('mundial/index.html', {'puntajes': puntajes, 'partidos': partidos, 'no_login': no_login,
-                                                     'formulario': formulario, 'formulario_email': formulario_email}, context_instance=RequestContext(request))
+    return render_to_response('mundial/index.html', { 'no_login': no_login,
+                                                     'formulario': formulario}, context_instance=RequestContext(request))
 
 def clasificacion(request):
     grupos = Grupo.objects.all()
