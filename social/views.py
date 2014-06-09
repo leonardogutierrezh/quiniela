@@ -11,8 +11,9 @@ from mundial.models import *
 from social.forms import *
 from apuesta.models import Apuesta
 from django.forms.formsets import formset_factory
-import time
+import time, json
 from django.core.mail import EmailMessage, EmailMultiAlternatives
+from django.db.models import Q
 
 
 @login_required(login_url='/')
@@ -114,3 +115,20 @@ def ver_torneo(request,id_torneo):
     ordenados_mayor = ordenados[:: -1]
     print ordenados_mayor
     return render_to_response('social/ver_torneo.html', {'participantes':ordenados_mayor, 'torneo': torneo}, context_instance=RequestContext(request))
+
+@login_required(login_url='/')
+def email_autocomplete(request):
+   term = request.GET['q']
+
+   users = User.objects.filter(Q(first_name__contains = term) | Q(last_name__contains = term) | Q(email__contains = term) | Q(username__contains = term))
+
+   opciones  = []
+   for user in users:
+       opciones.append({
+           'nombre'    : user.first_name,
+           'apellido'  : user.last_name,
+           'email'     : user.email,
+           'username'  : user.username,
+       })
+
+   return HttpResponse(json.dumps(opciones) , mimetype= 'application/json')

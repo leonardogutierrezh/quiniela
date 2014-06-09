@@ -3,6 +3,9 @@
 {% block titulo %}
     Nuevo Torneo
 {% endblock %}
+{% block css %}
+    <link href="{{ STATIC_URL }}css/jquery-ui-1.10.4.custom.min.css" rel="stylesheet">
+{% endblock %}
 {% block seccion-contenido %}
 <div class="login-container">
 <form class="form-signin" id='formulario' method='post' action=''>{% csrf_token %}
@@ -15,12 +18,12 @@
                 <h4>Invitados</h4>
             </div>
             <div class="col-md-6 text-right">
-                <a id="agregar-sala" class="btn btn-primary">Agregar Invitado</a>
+                <a id="agregar-invitacion" class="btn btn-primary">Agregar Invitado</a>
             </div>
 
                 <table id="salas-formset-container" class="table table-stripped">
                     
-                    <tbody id="salas-formset-body">
+                    <tbody id="email-formset-body">
                         {{ invitados_forms.management_form }}
                         {% for invitadoform in invitados_forms %}
                             <tr>
@@ -55,7 +58,7 @@
 </div>
 {% endblock %}
 {% block js %}
-    <script type="text/html" id="sala-template">
+    <script type="text/html" id="invitacion-template">
         {% with invitados_forms.empty_form as form %}
             <tr>
                 <td>
@@ -78,16 +81,83 @@
         {% endwith %}
     </script>
     <script type="text/javascript">
-        $( '#agregar-sala' ).on('click', function(event) {
-            event.preventDefault();
-            /* Act on the event */
-            var numForms = parseInt( $( '#id_form-TOTAL_FORMS' ).val() );
-            var tmpl = $( '#sala-template' ).html();
-            var compiledTmpl = tmpl.replace(/__prefix__/g, numForms);
+     /**
+        *  Adjuntar un widget de autocompletación al formulario para añadir
+        *  un miembro al elenco
+        */
+       function bindAutocomplete( numForm ) {
+           $( '#id_form-' + numForm + '-email' ).autocomplete({
+               minLength: 2,
+               source: function( request, response ) {
+                   $.get(
+                       '/email_autocomplete',
+                       {
+                           q : request.term
+                       },
+                       function(data) {
+                           response(data);
+                       }
+                   );
+               },
+               focus: function( event, ui ) {
+                   $( '#id_form-' + numForm + '-email' ).val( ui.item.email );
+                   return false;
+               },
+               select: function( event, ui ) {
+                   $( '#id_form-' + numForm + '-email' ).val( ui.item.email );
+                   return false;
+               }
+           })
+           .data( "ui-autocomplete" )._renderItem = function( ul, item ) {
+               return $( "<li>" )
+               .append( "<a><p>" + item.nombre + " "+ item.apellido + "<br>" + item.email +  "</p></a>" )
+               .appendTo( ul );
+           };
+       }
 
-            $( '#id_form-TOTAL_FORMS' ).attr('value',numForms+1);
-            $( '#salas-formset-body' ).append(compiledTmpl);
-        });
+    $( '#agregar-invitacion' ).on('click', function(event) {
+           event.preventDefault();
+
+           var numForms = parseInt( $( '#id_form-TOTAL_FORMS' ).val() );
+           var tmpl = $( '#invitacion-template' ).html();
+           var compiledTmpl = tmpl.replace(/__prefix__/g, numForms);
+
+           $( '#id_form-TOTAL_FORMS' ).attr('value',numForms+1);
+           $( '#email-formset-body' ).append(compiledTmpl);
+
+           bindAutocomplete( numForms );
+       });
+
+       $( 'input.email-autocomplete' ).each( function( index ) {
+           $( this ).autocomplete({
+               minLength: 2,
+               source: function( request, response ) {
+                   $.get(
+                       '/email_autocomplete',
+                       {
+                           q : request.term
+                       },
+                       function(data) {
+                           response(data);
+                       }
+                   );
+               },
+               focus: function( event, ui ) {
+                   $( '#id_form-' + index + '-email' ).val( ui.item.email );
+                   return false;
+               },
+               select: function( event, ui ) {
+                   $( '#id_form-' + index + '-email' ).val( ui.item.email );
+
+                   return false;
+               }
+           })
+           .data( "ui-autocomplete" )._renderItem = function( ul, item ) {
+               return $( "<li>" )
+              .append( "<a><p>" + item.nombre + " "+ item.apellido + "<br>" + item.email +  "</p></a>" )
+               .appendTo( ul );
+           };
+       })
 
     </script>
 

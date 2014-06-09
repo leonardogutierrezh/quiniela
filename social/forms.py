@@ -9,7 +9,7 @@ class EmailForm(forms.Form):
     apellido = forms.CharField()
 
 class InvitacionForm(forms.Form):
-    email = forms.EmailField()
+    email = forms.EmailField(widget=forms.TextInput(attrs={'class': 'email-autocomplete'}))
 
 class TorneoForm(forms.Form):
     nombre = forms.CharField(label="Nombre del Torneo")

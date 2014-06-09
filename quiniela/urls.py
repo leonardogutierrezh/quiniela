@@ -26,4 +26,5 @@ urlpatterns = patterns('',
     url(r'^calcular_puntos/$', 'apuesta.views.calcular_puntos_grupos'),
     url(r'^clasificacion/$', 'mundial.views.clasificacion'),
     url(r'^logout/$', 'mundial.views.logout_views'),
+    url(r'^email_autocomplete', 'social.views.email_autocomplete'),
 )
