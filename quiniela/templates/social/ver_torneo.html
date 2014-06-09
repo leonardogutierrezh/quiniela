@@ -3,16 +3,25 @@
     {{ torneo.nombre }}
 {% endblock %}
 {% block seccion-contenido %}
-    <div class="col-sm-6">
-        <table>
-            <th>Participante</th>
-            <th>Puntaje</th>
-            {% for participante in participantes %}
-                <tr>
-                    <td>{{ participante.0.first_name }} {{ participante.0.last_name }}</td>
-                    <td>{{ participante.1 }}</td>
-                </tr>
-            {% endfor %}
-        </table>
-    </div>
+
+<div class="container">
+	<div class="login-container">
+
+	<div class="panel panel-primary">
+				<div class="panel-heading">
+<h4>Tabla de clasificación del torneo</h4>
+				</div>
+	<div class="panel-body">
+		<table width="100%">
+		    <th  width="50%">Participante</th>
+		    <th  width="50%" style="text-align:center;">Puntaje</th>
+		    {% for participante in participantes %}
+		        <tr>
+		            <td>{{ participante.0.first_name }} {{ participante.0.last_name }}</td>
+		            <td style="text-align:center;">{{ participante.1 }}</td>
+		        </tr>
+		    {% endfor %}
+		</table>
+	</div>
+</div>
 {% endblock %}
