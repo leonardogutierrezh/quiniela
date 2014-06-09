@@ -8,7 +8,7 @@
 <div class="bloque-1-index">
     <h4>Ultimos Resultados</h4>
     {% for partido in partidos %}
-        <div>
+        <div class="partido-home">
 	<div  class="apuesta-fechas">
 		{{ partido.0.fecha }} {{ partido.0.hora }}
 	</div>
@@ -21,13 +21,13 @@
 	<div class="apuesta-equipos-l">
 		{{ partido.equipoL }}
 	</div>
-                <div class="form-group  apuesta-resultados">
+                <div class="apuesta-resultados-l">
                     <div class=" ">
                         {{ partido.golesL }}
 
                     </div>
                 </div>
-  		 <div class="form-group apuesta-resultados">
+  		 <div class="apuesta-resultados-v">
                     <div class=" ">
                         {{ partido.golesC }}
                     </div>
@@ -45,11 +45,13 @@
 </div>
 <div class="bloque-2-index">
     <h4>Top 10</h4>
+<div class="top10">
     <ul>
         {% for puntaje in puntajes %}
-            <li>{{ puntaje.usuario.first_name }} {{ puntaje.usuario.last_name }} <strong>{{ puntaje.puntaje }}</strong></li>
+            <li><div class="top10-nombre">{{ puntaje.usuario.first_name }} {{ puntaje.usuario.last_name }}</div><div class="top10-puntos"> <strong>{{ puntaje.puntaje }}</strong></div></li>
         {% endfor %}
     </ul>
+</div>
 </div>
 </div>
 
