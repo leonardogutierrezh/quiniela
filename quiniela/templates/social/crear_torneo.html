@@ -48,6 +48,22 @@ Crear torneo
 
                             </tr>
                         {% endfor %}
+                        {% for no_miembro in no_miembros %}
+                        <tr>
+                                <td>
+                                    <div class="form-group">
+
+
+                                        {{ no_miembro.correo }}
+
+
+
+
+                                    </div>
+                                </td>
+
+                            </tr>
+                        {% endfor %}
                         {{ invitados_forms.management_form }}
                         {% for invitadoform in invitados_forms %}
                             <tr>

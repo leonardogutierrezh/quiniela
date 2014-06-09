@@ -28,7 +28,7 @@ def crear_torneo(request):
                 if not invitado.cleaned_data['DELETE']:
                     email = invitado.cleaned_data['email']
                     hash =str(torneo.id) + str(time.time()).split('.')[0] + email
-                    if not(Invitado.objects.filter(correo=email, torneo=torneo)) and not(Invitado.objects.filter()):
+                    if not(Invitacion.objects.filter(correo=email, torneo=torneo)) and not(email==request.user.email):
                         Invitacion.objects.create(correo=email, torneo=torneo, hash=hash, estado='N')
                 print invitado.cleaned_data['email']
                 print invitado.cleaned_data['DELETE']
@@ -43,7 +43,7 @@ def editar_torneo(request, id_torneo):
     torneo = Torneo.objects.get(id=id_torneo)
     invitados_forms = formset_factory(InvitacionForm, can_delete = True, extra = 0)
     miembros = torneo.miembros.all()
-
+    no_mimebros = Invitacion.objects.filter(torneo=torneo)
     if request.method == 'POST':
         formulario = TorneoForm(request.POST)
         formulario_invitados = invitados_forms(request.POST)
@@ -55,7 +55,7 @@ def editar_torneo(request, id_torneo):
                 if not invitado.cleaned_data['DELETE']:
                     email = invitado.cleaned_data['email']
                     hash =str(torneo.id) + str(time.time()).split('.')[0] + email
-                    if not(Invitado.objects.filter(correo=email, torneo=torneo)) and not(Invitado.objects.filter()):
+                    if not(Invitacion.objects.filter(correo=email, torneo=torneo)) and not(email == request.user.email):
                         Invitacion.objects.create(correo=email, torneo=torneo, hash=hash, estado='N')
                 print invitado.cleaned_data['email']
                 print invitado.cleaned_data['DELETE']
@@ -63,8 +63,8 @@ def editar_torneo(request, id_torneo):
         else:
             invitados_forms = formulario_invitados
     else:
-        formulario = TorneoForm()
-    return render_to_response('social/crear_torneo.html', {'miembros': miembros,'invitados_forms': invitados_forms, 'formulario': formulario}, context_instance=RequestContext(request))
+        formulario = TorneoForm(initial={'nombre': torneo.nombre})
+    return render_to_response('social/crear_torneo.html', {'no_miembros': no_mimebros,'miembros': miembros,'invitados_forms': invitados_forms, 'formulario': formulario}, context_instance=RequestContext(request))
 
 
 def enviar_invitaciones(request):
