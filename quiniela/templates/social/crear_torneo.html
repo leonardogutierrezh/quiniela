@@ -1,13 +1,21 @@
 {% extends "admin.html" %}
 {% load bootstrap %}
 {% block titulo %}
-    Nuevo Torneo
+    
 {% endblock %}
 {% block css %}
     <link href="{{ STATIC_URL }}css/jquery-ui-1.10.4.custom.min.css" rel="stylesheet">
 {% endblock %}
 {% block seccion-contenido %}
 <div class="login-container">
+
+
+<div class="panel panel-primary">
+			<div class="panel-heading">
+Crear torneo
+	</div>
+	<div class="panel-body">
+
 <form class="form-signin" id='formulario' method='post' action=''>{% csrf_token %}
 <div class="row">
         <div class="col-md-12">
@@ -50,11 +58,17 @@
                         {% endfor %}
                     </tbody>
                 </table>
+<button class="btn btn-lg btn-primary btn-block" type="submit">Crear</button>
 
         </div>
-            <button class="btn btn-lg btn-primary btn-block" type="submit">Crear</button>
+            
         </div>
 </form>
+
+</div>
+</div>
+
+
 </div>
 {% endblock %}
 {% block js %}
