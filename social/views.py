@@ -28,7 +28,8 @@ def crear_torneo(request):
                 if not invitado.cleaned_data['DELETE']:
                     email = invitado.cleaned_data['email']
                     hash =str(torneo.id) + str(time.time()).split('.')[0] + email
-                    Invitacion.objects.create(correo=email, torneo=torneo, hash=hash, estado='N')
+                    if not(Invitado.objects.filter(correo=email, torneo=torneo)) and not(Invitado.objects.filter()):
+                        Invitacion.objects.create(correo=email, torneo=torneo, hash=hash, estado='N')
                 print invitado.cleaned_data['email']
                 print invitado.cleaned_data['DELETE']
             return HttpResponseRedirect('/perfil')
