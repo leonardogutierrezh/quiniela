@@ -118,12 +118,25 @@ def invitacion(request,invitacion):
 @login_required(login_url='/')
 def mi_quiniela(request):
     grupos = Grupo.objects.all()
+    loged = 0
     lista = []
     for grupo in grupos:
         apuestas = Apuesta.objects.filter(partido__equipoL__grupo = grupo, usuario=request.user)
         tupla = (grupo,apuestas)
         lista.append(tupla)
-    return render_to_response('social/mi_quiniela.html', {'grupos': lista}, context_instance=RequestContext(request))
+    return render_to_response('social/mi_quiniela.html', {'grupos': lista, 'no_login': loged}, context_instance=RequestContext(request))
+
+def compartir_quiniela(request, id_user):
+    print request.user.id
+    loged = 1
+    usuario = User.objects.get(id=id_user)
+    grupos = Grupo.objects.all()
+    lista = []
+    for grupo in grupos:
+        apuestas = Apuesta.objects.filter(partido__equipoL__grupo = grupo, usuario=usuario)
+        tupla = (grupo,apuestas)
+        lista.append(tupla)
+    return render_to_response('social/mi_quiniela.html', {'grupos': lista, 'no_login': loged,'usuario': usuario}, context_instance=RequestContext(request))
 
 @login_required(login_url='/')
 def ver_torneo(request,id_torneo):

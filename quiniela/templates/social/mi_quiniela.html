@@ -1,6 +1,6 @@
 {% extends 'admin.html' %}
 {% block titulo %}
-    Mi quiniela
+   {% if no_login %} {{ usuario.first_name }} {{ usuario.last_name }}{% else %}Mi quiniela <div class="fb-share-button" data-href="https://quiniela.turpialdev.com/compartir_quiniela/{{ user.id }}" data-type="button_count"></div>{% endif %}
 {% endblock %}
 {% block seccion-contenido %}
 <div class="row">
@@ -9,7 +9,7 @@
 
 		<div class="panel panel-primary">
 			<div class="panel-heading">
-				<h4><a href="/poner_resultados/{{ grupo.0.id }}">Grupo {{ grupo.0.nombre }}  <i class="fa fa-pencil fa-fw"></i>modificar</a></h4>
+				<h4>{% if log_in %}<a href="/poner_resultados/{{ grupo.0.id }}">Grupo {{ grupo.0.nombre }}  <i class="fa fa-pencil fa-fw"></i>modificar</a>{% else %}Grupo {{ grupo.0.nombre }}{% endif %}</h4>
 			</div>
 			<div class="panel-body">
 				{% for partido in grupo.1 %}
