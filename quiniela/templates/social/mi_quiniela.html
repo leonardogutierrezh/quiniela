@@ -23,8 +23,11 @@
                         vs
 					    {{ partido.golesV }}
 					    <img src="{{ MEDIA_URL }}{{ partido.partido.equipoV.bandera }}" height="30" width="43" title="{{ partido.partido.equipoV.pais }}" style="margin-left: 10px;">
+
 					</div>
                 </div>
+                    {% empty %}
+                            <p>Debes darle a modificar para crear los resultados de este grupo!</p>
 				{% endfor %}
 			</div>
 		</div>
