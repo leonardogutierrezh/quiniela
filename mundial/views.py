@@ -113,7 +113,7 @@ def clasificacion(request):
     grupos = Grupo.objects.all()
     lista = []
     for grupo in grupos:
-        miembros = Equipo.objects.filter(grupo=grupo).order_by('-puntos','golesF')
+        miembros = Equipo.objects.filter(grupo=grupo).order_by('-puntos','-golesF')
         tupla = (grupo,miembros)
         lista.append(tupla)
     return render_to_response('mundial/clasificacion.html', {'grupos': lista}, context_instance=RequestContext(request))
