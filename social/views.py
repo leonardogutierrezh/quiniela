@@ -27,7 +27,7 @@ def crear_torneo(request):
             for invitado in formulario_invitados:
                 if not invitado.cleaned_data['DELETE']:
                     email = invitado.cleaned_data['email']
-                    hash =str(torneo.id) + str(time.time()).split('.')[0] + email
+                    hash =str(torneo.id) + str(time.time()).split('.')[0] + email.split("@")[0]
                     if not(Invitacion.objects.filter(correo=email, torneo=torneo)) and not(email==request.user.email):
                         Invitacion.objects.create(correo=email, torneo=torneo, hash=hash, estado='N')
                 print invitado.cleaned_data['email']
