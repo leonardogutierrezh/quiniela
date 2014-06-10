@@ -29,5 +29,6 @@ urlpatterns = patterns('',
     url(r'^email_autocomplete', 'social.views.email_autocomplete'),
     url(r'^rechazar/(?P<id_torneo>\d+)/$', 'social.views.rechazar_invitacion'),
     url(r'editar_torneo/(?P<id_torneo>\d+)/$', 'social.views.editar_torneo'),
-    url(r'^compartir_quiniela/(?P<id_user>\d+)/$', 'social.views.compartir_quiniela')
+    url(r'^compartir_quiniela/(?P<id_user>\d+)/$', 'social.views.compartir_quiniela'),
+    url(r'^accounts/', include('allauth.urls'))
 )

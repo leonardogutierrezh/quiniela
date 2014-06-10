@@ -143,6 +143,10 @@ INSTALLED_APPS = (
     'mundial',
     'social',
     'bootstrapform',
+    'allauth',
+    'allauth.account',
+    'allauth.socialaccount',
+    'allauth.socialaccount.providers.facebook',
 )
 
 # A sample logging configuration. The only tangible logging
@@ -180,3 +184,7 @@ EMAIL_HOST_PASSWORD = 'sgiDRICUSB'
 EMAIL_PORT = 587
 EMAIL_USE_TLS = True
 
+# AllAuth
+ACCOUNT_EMAIL_REQUIRED = False
+ACCOUNT_EMAIL_VERIFICATION = "none"
+SOCIALACCOUNT_EMAIL_VERIFICATION = "none"

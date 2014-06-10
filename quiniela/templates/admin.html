@@ -53,6 +53,8 @@
                 {% if no_login %}
                 <li><a href="/login"><i class="fa fa-sign-in fa-fw"></i> Login </a>
                 </li>
+                {% load socialaccount %}
+                <li><a href="{% provider_login_url "facebook" %}"><i class="fa fa-facebook fa-fw"></i>Login con Facebook</a></li>
                 <li><a href="/registrarse"><i class="fa fa-pencil fa-fw"></i> Registrarse</a>
                 </li>
                 {% else %}
