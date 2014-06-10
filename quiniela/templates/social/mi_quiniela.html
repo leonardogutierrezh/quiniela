@@ -1,9 +1,12 @@
 {% extends 'admin.html' %}
 {% block titulo %}
-   {% if no_login %} {{ usuario.first_name }} {{ usuario.last_name }}{% else %}Mi quiniela <div class="fb-share-button" data-href="https://quiniela.turpialdev.com/compartir_quiniela/{{ user.id }}" data-type="button_count"></div>{% endif %}
+   {% if no_login %} {{ usuario.first_name }} {{ usuario.last_name }}{% else %}Mi quiniela{% endif %}
 {% endblock %}
 {% block seccion-contenido %}
 <div class="row">
+{% if no_login %}{% else %}<div class="fb-share-button" data-href="https://quiniela.turpialdev.com/compartir_quiniela/{{ user.id }}" data-type="button_count"></div> Compartir los resultados de mi quiniela.{% endif %}
+ 
+
     {% for grupo in grupos %}
 	<div class="col-md-6">
 
