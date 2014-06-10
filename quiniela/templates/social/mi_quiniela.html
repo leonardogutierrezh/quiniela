@@ -9,7 +9,7 @@
 
 		<div class="panel panel-primary">
 			<div class="panel-heading">
-				<h4>{% if log_in %}<a href="/poner_resultados/{{ grupo.0.id }}">Grupo {{ grupo.0.nombre }}  <i class="fa fa-pencil fa-fw"></i>modificar</a>{% else %}Grupo {{ grupo.0.nombre }}{% endif %}</h4>
+				<h4>{% if no_login == 0 %}<a href="/poner_resultados/{{ grupo.0.id }}">Grupo {{ grupo.0.nombre }}  <i class="fa fa-pencil fa-fw"></i>modificar</a>{% else %}Grupo {{ grupo.0.nombre }}{% endif %}</h4>
 			</div>
 			<div class="panel-body">
 				{% for partido in grupo.1 %}
