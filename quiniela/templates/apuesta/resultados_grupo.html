@@ -41,7 +41,7 @@ Introduce tu quiniela
 	</div>
                 <div class="form-group {% if partido.1 %}  {% else %} has-error {% endif %} apuesta-resultados">
                     <div class=" ">
-                        <input type="text" value="{{ partido.2 }}" class=" form-control" name="resultado-{{ partido.0.id }}-{{ partido.0.equipoL.id }}"/>
+                        <input type="text" value="{{ partido.2 }}" class=" form-control" name="resultado-{{ partido.0.id }}-{{ partido.0.equipoL.id }}" {% ifnotequal partido.0.ganador 'N' %}readonly{% endifnotequal %}/>
                         {% if partido.1 %}
                         {% else %}
                             <span class="help-block ">Este campo es obligatorio y debe ser un numero.</span>
@@ -50,7 +50,7 @@ Introduce tu quiniela
                 </div>
   		 <div class="form-group {% if partido.1 %}  {% else %} has-error {% endif %} apuesta-resultados">
                     <div class=" ">
-                        <input type="text" value="{{ partido.3 }}" class="form-control" name="resultado-{{ partido.0.id }}-{{ partido.0.equipoV.id }}"/>
+                        <input type="text" value="{{ partido.3 }}" class="form-control" name="resultado-{{ partido.0.id }}-{{ partido.0.equipoV.id }}" {% ifnotequal partido.0.ganador 'N' %}readonly{% endifnotequal %}/>
                     </div>
                     {% if partido.1 %}
                         {% else %}

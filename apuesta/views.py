@@ -51,15 +51,16 @@ def resultados_grupo(request, id_grupo):
                     equipoV = request.POST.get('resultado-' + str(partido.id) + '-' + str(partido.equipoV.id))
                     if Apuesta.objects.filter(usuario=usuario, partido=partido):
                         apuesta = Apuesta.objects.get(usuario=usuario, partido=partido)
-                        apuesta.golesL = equipoL
-                        apuesta.golesV = equipoV
-                        if apuesta.golesV > apuesta.golesL:
-                            apuesta.ganador = 'V'
-                        elif apuesta.golesL > apuesta.golesV:
-                            apuesta.ganador = 'L'
-                        else:
-                            apuesta.ganador = 'E'
-                        apuesta.save()
+                        if apuesta.partido.ganador == 'N':
+                            apuesta.golesL = equipoL
+                            apuesta.golesV = equipoV
+                            if apuesta.golesV > apuesta.golesL:
+                                apuesta.ganador = 'V'
+                            elif apuesta.golesL > apuesta.golesV:
+                                apuesta.ganador = 'L'
+                            else:
+                                apuesta.ganador = 'E'
+                            apuesta.save()
                     else:
                         apuesta = Apuesta.objects.create(partido=partido, golesL=equipoL, golesV=equipoV,
                                                          usuario=usuario, ganador='N')
