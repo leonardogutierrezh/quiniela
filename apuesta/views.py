@@ -62,15 +62,16 @@ def resultados_grupo(request, id_grupo):
                                 apuesta.ganador = 'E'
                             apuesta.save()
                     else:
-                        apuesta = Apuesta.objects.create(partido=partido, golesL=equipoL, golesV=equipoV,
-                                                         usuario=usuario, ganador='N')
-                        if apuesta.golesV > apuesta.golesL:
-                            apuesta.ganador = 'V'
-                        elif apuesta.golesL > apuesta.golesV:
-                            apuesta.ganador = 'L'
-                        else:
-                            apuesta.ganador = 'E'
-                        apuesta.save()
+                        if partido.ganador == 'N':
+                            apuesta = Apuesta.objects.create(partido=partido, golesL=equipoL, golesV=equipoV,
+                                                             usuario=usuario, ganador='N')
+                            if apuesta.golesV > apuesta.golesL:
+                                apuesta.ganador = 'V'
+                            elif apuesta.golesL > apuesta.golesV:
+                                apuesta.ganador = 'L'
+                            else:
+                                apuesta.ganador = 'E'
+                            apuesta.save()
                 return HttpResponseRedirect('/mi_quiniela')
         else:
             for partido in partidos:
